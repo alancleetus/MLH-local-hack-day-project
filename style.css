@@ -1,0 +1,68 @@
+html, body
+{
+	background-color: #211f30;
+	color:white;
+	
+	max-height:100%;
+	font-size:16px;
+	margin:0px;
+	padding:0px;
+}
+
+
+/*top bar*/
+#top_bar
+{
+	height: 50px;
+	background-color:black;
+}
+
+#pause
+{
+	margin:15px;
+	margin-left:20px;
+	float: left;
+}
+
+#score
+{
+	margin:15px;
+	margin-right:20px;
+	float: right;
+}
+
+#score-label
+{
+	display: inline-block;
+	margin:10px;
+	margin-right:20px;
+	float: right;
+}
+
+#val
+{
+	max-width: 20px;
+	min-width: 20px;
+}
+
+/*gamewindow*/
+#game_window
+{
+background-color:green;
+	padding:0px;
+	margin:0px;
+	cursor:wait;
+	height:calc(100%-50px);
+
+}
+
+#dot
+{
+	background-color:#f62a00;
+	width:10px;
+	height:10px;
+	border-radius:30px;
+}
+
+
+
