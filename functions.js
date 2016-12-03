@@ -24,7 +24,7 @@ $(document).mousemove(function(e){
 /*global values*/
 var score = 0;
 var originalX = 0;
-var originalY = 50
+var originalY = 50;
 
 var posX = 0;
 var posY = 50;
@@ -49,15 +49,32 @@ function game()
 	var id = setInterval(playGame,5);
 	function playGame()
 	{		
-		
 		if(timer == 0)
 		{
 			timer = 50;
 			dir = Math.floor(Math.random()*8);
-			score += 1;
 			
-			document.getElementById("val").innerHTML = score;
-
+			//update score if red ball inside white ball
+			var the_mouse = document.getElementById("seeker");
+				
+			var r1 = the_dot.style.width/2;
+			var r2 = the_mouse.style.width/2;
+			
+			var c1x = the_dot.style.left + r1;
+			var c1y = the_dot.style.top + r1;
+			
+			var c2x = the_mouse.style.left + r2;
+			var c2y = the_mouse.style.top + r2;
+			
+			var dSqrt = Math.sqrt((c2y-c1y)) + Math.sqrt((c2x - c1x));
+			
+			if(dSqrt <= Math.sqrt((r1+r2)))
+			{
+				score += 1;
+			
+				document.getElementById("val").innerHTML = score;
+			}
+			
 			switch(score/100)
 			{
 				case 0:
@@ -128,7 +145,7 @@ function game()
 		if(posY-dist > 50) posY--;
 		else posY++
 		the_dot.style.top = posY+"px";
-		console.log("up");
+		//console.log("up");
 	}
 	
 	function moveDown()
@@ -136,7 +153,7 @@ function game()
 		if(posY+dist < gwHeight) posY++;
 		else posY--;
 		the_dot.style.top = posY+"px";
-		console.log("down");
+		//console.log("down");
 	}
 	
 	function moveLeft()
@@ -144,7 +161,7 @@ function game()
 		if(posX-dist > 0) posX--;
 		else posX++;
 		the_dot.style.left = posX+"px";
-		console.log("left");
+		//console.log("left");
 	}
 	
 	function moveRight()
@@ -152,7 +169,7 @@ function game()
 		if(posX+dist < gwHeight) posX++;
 		else posX--;
 		the_dot.style.left = posX+"px";
-		console.log("right");
+		//console.log("right");
 	}
 	
 	
