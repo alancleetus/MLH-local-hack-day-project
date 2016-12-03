@@ -23,8 +23,8 @@ $(document).mousemove(function(e){
 
 /*global values*/
 var score = 0;
-var orginalX = 0;
-var orginalY = 50
+var originalX = 0;
+var originalY = 50
 
 var posX = 0;
 var posY = 50;
@@ -56,7 +56,7 @@ function game()
 			dir = Math.floor(Math.random()*8);
 			score += 1;
 			
-			document.getElementById("val").innerHTML = score
+			document.getElementById("val").innerHTML = score;
 
 			switch(score/100)
 			{
@@ -171,7 +171,9 @@ function game()
 		
 		posX = originalX;
 		posY = originalY;
-
+		score = 0;
+		
+		document.getElementById("val").innerHTML = score;
 	}
 	
 	
