@@ -17,3 +17,53 @@ $(document).mousemove(function(e){
 	$newY += (($yPos_mouse - $newY)/12);
 	$("#seeker").css({left:$newX +'px', top:$newY +'px'});  
 }, 3);
+
+
+/*****************************/
+function game()
+{
+	console.log("start");
+	var posX = 0;
+	var posY = 50;
+	
+	var gwHeight = $("#game_window").height();
+	var gwWidth = $("#game_window").width();
+	
+	console.log(gwHeight+" "+gwWidth);
+	var the_dot = document.getElementById("dot");
+		
+	var id = setInterval(playGame,5);
+	function playGame()
+	{
+		
+	}
+	
+	function moveUp()
+	{
+		if(posY-1 > 50) posY--;
+		else posY++
+		the_dot.style.top = posY+"px";
+	}
+	
+	function moveDown()
+	{
+		if(posY+1 < gwHeight) posY++;
+		else posY--;
+		the_dot.style.top = posY+"px";
+	}
+	
+	function moveLeft()
+	{
+		if(posX-1 > 0) posX--;
+		else posX++;
+		the_dot.style.left = posX+"px";
+	}
+	
+	function moveRight()
+	{
+		if(posX+1 < gwHeight) posX++;
+		else posX--;
+		the_dot.style.left = posX+"px";
+	}
+	
+}
