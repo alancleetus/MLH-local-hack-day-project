@@ -20,28 +20,66 @@ $(document).mousemove(function(e){
 
 
 /*****************************/
+
+/*global values*/
+var score = 0;
+var orginalX = 0;
+var orginalY = 50
+
+var posX = 0;
+var posY = 50;
+
 function game()
 {
 	console.log("start");
-	var posX = 0;
-	var posY = 50;
 	
-	var dist = 100;
+	var dist = 10;
 	var dir = 0;
+	
 	var timer = 50;
+	
 	var gwHeight = $("#game_window").height();
 	var gwWidth = $("#game_window").width();
+	
+	
 	
 	console.log(gwHeight+" "+gwWidth);
 	var the_dot = document.getElementById("dot");
 		
 	var id = setInterval(playGame,5);
 	function playGame()
-	{
+	{		
+		
 		if(timer == 0)
 		{
 			timer = 50;
-			dir = Math.floor(Math.random()*4);
+			dir = Math.floor(Math.random()*8);
+			score += 1;
+			
+			document.getElementById("val").innerHTML = score
+
+			switch(score/100)
+			{
+				case 0:
+					var dist = 10;
+					break;
+				case 1:
+					var dist = 100;
+					break;
+				case 2:
+					var dist = 300;
+					break;
+				case 3:
+					var dist = 400;
+					break;
+				case 4:
+					var dist = 500;
+					break;
+				default:
+					var dist = 600;
+					break;
+					
+			}
 		}
 		switch(dir)
 		{
@@ -60,11 +98,31 @@ function game()
 			case 3:
 				moveRight();
 				break;
+			
+			case 4:
+				moveUp();
+				moveLeft();
+				break;
+		
+			case 5:
+				moveUp();
+				moveRight();
+				break;
+		
+			case 6:
+				moveDown();
+				moveLeft();
+				break;
+		
+			case 7:
+				moveDown();
+				moveRight();
+				break;
 		
 		}
 		timer--;
 	}
-	
+
 	function moveUp()
 	{
 		if(posY-dist > 50) posY--;
@@ -96,5 +154,25 @@ function game()
 		the_dot.style.left = posX+"px";
 		console.log("right");
 	}
+	
+	
+	document.getElementById("pauseGame").onclick  = function pauseGame()
+	{
+		clearInterval(id);
+	
+	}
+	
+	document.getElementById("endGame").onclick  = function endGame()
+	{
+		clearInterval(id);
+		
+		the_dot.style.top = originalY;
+		the_dot.style.left = originalX
+		
+		posX = originalX;
+		posY = originalY;
+
+	}
+	
 	
 }

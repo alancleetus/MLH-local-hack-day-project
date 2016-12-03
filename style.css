@@ -68,8 +68,8 @@ html, body
 #seeker
 {
 	background-color:#fff;
-	width:100px;
-	height:100px;
+	width:120px;
+	height:120px;
 	border-radius:300px;
 	position:fixed;
 	z-index:0;
