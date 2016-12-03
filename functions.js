@@ -26,6 +26,9 @@ function game()
 	var posX = 0;
 	var posY = 50;
 	
+	var dist = 100;
+	var dir = 0;
+	var timer = 50;
 	var gwHeight = $("#game_window").height();
 	var gwWidth = $("#game_window").width();
 	
@@ -35,35 +38,63 @@ function game()
 	var id = setInterval(playGame,5);
 	function playGame()
 	{
+		if(timer == 0)
+		{
+			timer = 50;
+			dir = Math.floor(Math.random()*4);
+		}
+		switch(dir)
+		{
+			case 0:
+				moveUp();
+				break;
 		
+			case 1:
+				moveDown();
+				break;
+		
+			case 2:
+				moveLeft();
+				break;
+		
+			case 3:
+				moveRight();
+				break;
+		
+		}
+		timer--;
 	}
 	
 	function moveUp()
 	{
-		if(posY-1 > 50) posY--;
+		if(posY-dist > 50) posY--;
 		else posY++
 		the_dot.style.top = posY+"px";
+		console.log("up");
 	}
 	
 	function moveDown()
 	{
-		if(posY+1 < gwHeight) posY++;
+		if(posY+dist < gwHeight) posY++;
 		else posY--;
 		the_dot.style.top = posY+"px";
+		console.log("down");
 	}
 	
 	function moveLeft()
 	{
-		if(posX-1 > 0) posX--;
+		if(posX-dist > 0) posX--;
 		else posX++;
 		the_dot.style.left = posX+"px";
+		console.log("left");
 	}
 	
 	function moveRight()
 	{
-		if(posX+1 < gwHeight) posX++;
+		if(posX+dist < gwHeight) posX++;
 		else posX--;
 		the_dot.style.left = posX+"px";
+		console.log("right");
 	}
 	
 }
