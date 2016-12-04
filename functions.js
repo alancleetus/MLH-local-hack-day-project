@@ -23,12 +23,14 @@ $(document).mousemove(function(e){
 
 /*global values*/
 var score = 0;
-var originalX = 0;
-var originalY = 50;
+var originalX = 50;
+var originalY = 100;
 
-var posX = 0;
-var posY = 50;
+var posX = 50;
+var posY = 100;
 
+var health = 100;
+	
 function game()
 {
 	console.log("start");
@@ -37,7 +39,7 @@ function game()
 	var dir = 0;
 	
 	var timer = 50;
-	
+
 	var gwHeight = $("#game_window").height();
 	var gwWidth = $("#game_window").width();
 	
@@ -55,25 +57,52 @@ function game()
 			dir = Math.floor(Math.random()*8);
 			
 			//update score if red ball inside white ball
-			var the_mouse = document.getElementById("seeker");
-				
+			
 			var r1 = the_dot.style.width/2;
-			var r2 = the_mouse.style.width/2;
+			var r2 = $("#seeker").width()/2;
 			
-			var c1x = the_dot.style.left + r1;
-			var c1y = the_dot.style.top + r1;
+			var c1x = $("#dot").position().left + r1;
+			var c1y = $("#dot").position().top + r1;
 			
-			var c2x = the_mouse.style.left + r2;
-			var c2y = the_mouse.style.top + r2;
+			var c2x = $("#seeker").position().left + r2;
+			var c2y = $("#seeker").position().top + r2;
 			
-			var dSqrt = Math.sqrt((c2y-c1y)) + Math.sqrt((c2x - c1x));
+			console.log("r1"+r1+" r2"+r2+" c1x "+c1x+" cx2 "+c2x+" c1y "+c1y+" c2y "+c2y);
 			
-			if(dSqrt <= Math.sqrt((r1+r2)))
+			
+			var dSqrt = Math.pow((c2y-c1y),2) + Math.pow((c2x - c1x),2);
+			
+			
+			//console.log(dSqrt + "  "+ Math.pow((r1+r2),2));
+			if(dSqrt <= Math.pow((r1+r2),2))
 			{
 				score += 1;
 			
 				document.getElementById("val").innerHTML = score;
+				
+				health++;
+				document.getElementById("health").innerHTML = health;
 			}
+			else
+			{
+				health--;
+				document.getElementById("health").innerHTML = health;
+								
+				if(health == 0)
+				{
+					clearInterval(id);
+		
+					the_dot.style.top = originalY;
+					the_dot.style.left = originalX
+					
+					posX = originalX;
+					posY = originalY;
+					score = 0;
+					
+					document.getElementById("val").innerHTML = score;
+				}
+			}
+			
 			
 			switch(score/100)
 			{
@@ -98,6 +127,7 @@ function game()
 					
 			}
 		}
+		
 		switch(dir)
 		{
 			case 0:
@@ -142,7 +172,7 @@ function game()
 
 	function moveUp()
 	{
-		if(posY-dist > 50) posY--;
+		if(posY-dist > 100) posY--;
 		else posY++
 		the_dot.style.top = posY+"px";
 		//console.log("up");
@@ -158,7 +188,7 @@ function game()
 	
 	function moveLeft()
 	{
-		if(posX-dist > 0) posX--;
+		if(posX-dist > 50) posX--;
 		else posX++;
 		the_dot.style.left = posX+"px";
 		//console.log("left");

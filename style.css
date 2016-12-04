@@ -55,6 +55,8 @@ html, body
 
 }
 
+
+/*circles*/
 #dot
 {
 	background-color:#f62a00;
@@ -75,5 +77,12 @@ html, body
 	z-index:0;
 }
 
-
-
+#health 
+{
+	font-size:2em;
+	color:#10d846;
+	text-align:center;
+	margin-left:28%;
+	top:35%;
+	position:relative;
+}
