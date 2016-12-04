@@ -23,25 +23,29 @@ $(document).mousemove(function(e){
 
 /*global values*/
 var score = 0;
-var originalX = 50;
-var originalY = 100;
 
-var posX = 50;
-var posY = 100;
 
 var health = 100;
-	
+
 function game()
 {
+	var paused = false;
+	
 	console.log("start");
 	
-	var dist = 10;
+	var originalX =  $("#dot").position().left;
+	var originalY =  $("#dot").position().top;
+
+	var posX = originalX;
+	var posY = originalY;
+
+	var dist = 1;
 	var dir = 0;
 	
 	var timer = 50;
 
-	var gwHeight = $("#game_window").height();
-	var gwWidth = $("#game_window").width();
+	var gwHeight = $("#game_window").height()-50;
+	var gwWidth = $("#game_window").width()-50;
 	
 	
 	
@@ -90,42 +94,41 @@ function game()
 								
 				if(health == 0)
 				{
-					clearInterval(id);
-		
-					the_dot.style.top = originalY;
-					the_dot.style.left = originalX
-					
-					posX = originalX;
-					posY = originalY;
-					score = 0;
-					
-					document.getElementById("val").innerHTML = score;
+					endGame();
 				}
 			}
 			
+			if(health<25)
+				$("health").css('color', 'red');
+			else if(health<50)
+				$("health").css('color', 'orange');
+			else if(health<75)
+				$("health").css('color','yellow');
+			else if(health == 0)
+				$("health").css('color', 'black');
 			
-			switch(score/100)
+			/*switch(score/100)
 			{
 				case 0:
-					var dist = 10;
+					var dist = 1;
 					break;
 				case 1:
-					var dist = 100;
+					var dist = 10;
 					break;
 				case 2:
-					var dist = 300;
+					var dist = 30;
 					break;
 				case 3:
-					var dist = 400;
+					var dist = 40;
 					break;
 				case 4:
-					var dist = 500;
+					var dist = 50;
 					break;
 				default:
-					var dist = 600;
+					var dist = 100;
 					break;
 					
-			}
+			*/
 		}
 		
 		switch(dir)
@@ -172,45 +175,46 @@ function game()
 
 	function moveUp()
 	{
-		if(posY-dist > 100) posY--;
-		else posY++
+		if(posY-dist > 100) posY-=dist;
+		else posY+=dist;
 		the_dot.style.top = posY+"px";
 		//console.log("up");
 	}
 	
 	function moveDown()
 	{
-		if(posY+dist < gwHeight) posY++;
-		else posY--;
+		if(posY+dist < gwHeight) posY+=dist;
+		else posY-=dist;
 		the_dot.style.top = posY+"px";
 		//console.log("down");
 	}
 	
 	function moveLeft()
 	{
-		if(posX-dist > 50) posX--;
-		else posX++;
+		if(posX-dist > 50) posX-=dist;
+		else posX+=dist;
 		the_dot.style.left = posX+"px";
 		//console.log("left");
 	}
 	
 	function moveRight()
 	{
-		if(posX+dist < gwHeight) posX++;
-		else posX--;
+		if(posX+dist < gwHeight) posX+=dist;
+		else posX-=dist;
 		the_dot.style.left = posX+"px";
 		//console.log("right");
 	}
 	
-	
-	document.getElementById("pauseGame").onclick  = function pauseGame()
+		
+	function pauseGame()
 	{
-		clearInterval(id);
-	
+		clearInterval(id);	
+		paused = true;
 	}
-	
-	document.getElementById("endGame").onclick  = function endGame()
+
+	function endGame()
 	{
+		ended = true;
 		clearInterval(id);
 		
 		the_dot.style.top = originalY;
@@ -218,10 +222,38 @@ function game()
 		
 		posX = originalX;
 		posY = originalY;
+		
+		alert("Total Score: " + score);
+		
 		score = 0;
 		
+		health = 100;
 		document.getElementById("val").innerHTML = score;
+		document.getElementById("health").innerHTML = health;
+		
+		return;
 	}
 	
 	
+	/*eventlistners*/
+	document.getElementById("pauseGame").addEventListener("click",pauseGame,false);
+	document.getElementById("endGame").addEventListener("click", endGame,false); 
+	
+	/*$(window).keypress(function (e) {
+		if (e.keyCode === 0 || e.keyCode === 32) {
+			e.preventDefault()
+			console.log('Space pressed')
+			
+			if(!paused)
+			{
+				paused = true;
+				pauseGame();
+			}
+			else 
+			{
+				paused = false;
+				game();
+			}
+		
+	})*/
 }
