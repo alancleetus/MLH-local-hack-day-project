@@ -1,3 +1,5 @@
+/*****moves div with mouse****/
+
 var $xPos_mouse = 0;
 var $yPos_mouse = 0;
 var $newX = 0; 
@@ -23,35 +25,40 @@ $(document).mousemove(function(e){
 
 /*global values*/
 var score = 0;
-
-
+var playing = false;
 var health = 100;
+
 
 function game()
 {
+	//if already an instance of game do nothing
+	if(playing == true)return;
+	
+	playing = true;
+	
 	var paused = false;
 	
-	console.log("start");
-	
+	//where the red dot starts
 	var originalX =  $("#dot").position().left;
 	var originalY =  $("#dot").position().top;
 
+	//varibale that will keep the current position of red dot
 	var posX = originalX;
 	var posY = originalY;
 
-	var dist = 1;
-	var dir = 0;
+	var dist = 1;	//how far the dot will move
+	var dir = 0;	//what direction the dot moves
 	
 	var timer = 50;
 
+	//size of the div the game will be in
 	var gwHeight = $("#game_window").height()-50;
 	var gwWidth = $("#game_window").width()-50;
 	
-	
-	
-	console.log(gwHeight+" "+gwWidth);
+	//console.log(gwHeight+" "+gwWidth);
 	var the_dot = document.getElementById("dot");
-		
+	
+	//this update the game word at each 5 millisec?
 	var id = setInterval(playGame,5);
 	function playGame()
 	{		
@@ -71,12 +78,10 @@ function game()
 			var c2x = $("#seeker").position().left + r2;
 			var c2y = $("#seeker").position().top + r2;
 			
-			console.log("r1"+r1+" r2"+r2+" c1x "+c1x+" cx2 "+c2x+" c1y "+c1y+" c2y "+c2y);
-			
+			//console.log("r1"+r1+" r2"+r2+" c1x "+c1x+" cx2 "+c2x+" c1y "+c1y+" c2y "+c2y);
 			
 			var dSqrt = Math.pow((c2y-c1y),2) + Math.pow((c2x - c1x),2);
-			
-			
+						
 			//console.log(dSqrt + "  "+ Math.pow((r1+r2),2));
 			if(dSqrt <= Math.pow((r1+r2),2))
 			{
@@ -98,7 +103,7 @@ function game()
 				}
 			}
 			
-			if(health<25)
+			/*if(health<25)
 				$("health").css('color', 'red');
 			else if(health<50)
 				$("health").css('color', 'orange');
@@ -107,7 +112,7 @@ function game()
 			else if(health == 0)
 				$("health").css('color', 'black');
 			
-			/*switch(score/100)
+			switch(score/100)
 			{
 				case 0:
 					var dist = 1;
@@ -210,6 +215,7 @@ function game()
 	{
 		clearInterval(id);	
 		paused = true;
+		playing = false;
 	}
 
 	function endGame()
@@ -224,6 +230,8 @@ function game()
 		posY = originalY;
 		
 		alert("Total Score: " + score);
+		
+		location.reload();
 		
 		score = 0;
 		
